@@ -3,9 +3,7 @@ package corgitaco.blockswap;
 import corgitaco.blockswap.config.BlockSwapConfig;
 import corgitaco.blockswap.config.MissingBlockIDsConfig;
 import corgitaco.blockswap.network.NetworkHandler;
-import corgitaco.blockswap.client.BlockIndexScreen;
-import net.minecraftforge.client.ConfigScreenHandler;
-import net.minecraftforge.fml.ModLoadingContext;
+import corgitaco.blockswap.client.ForgeClientSetup;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -18,10 +16,7 @@ public class BlockSwapForge {
     public BlockSwapForge() {
         BlockSwap.init(FMLPaths.CONFIGDIR.get().resolve(BlockSwap.MOD_ID));
         if (FMLEnvironment.dist.isClient()) {
-            ModLoadingContext.get().registerExtensionPoint(
-                    ConfigScreenHandler.ConfigScreenFactory.class,
-                    () -> new ConfigScreenHandler.ConfigScreenFactory((mc, parent) -> new BlockIndexScreen(parent))
-            );
+            ForgeClientSetup.register();
         }
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
     }
